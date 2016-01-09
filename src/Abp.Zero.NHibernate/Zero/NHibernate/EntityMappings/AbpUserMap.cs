@@ -4,11 +4,11 @@ using Abp.NHibernate.EntityMappings;
 
 namespace Abp.Zero.NHibernate.EntityMappings
 {
-    public class UserMap<TTenant, TUser> : EntityMap<TUser, long>
+    public abstract class AbpUserMap<TTenant, TUser> : EntityMap<TUser, long>
         where TUser : AbpUser<TTenant, TUser>
         where TTenant : AbpTenant<TTenant, TUser>
     {
-        protected UserMap()
+        protected AbpUserMap()
             : base("AbpUsers")
         {
             Map(x => x.TenantId);
@@ -22,6 +22,7 @@ namespace Abp.Zero.NHibernate.EntityMappings
             Map(x => x.PasswordResetCode);
             Map(x => x.LastLoginTime);
             Map(x => x.IsActive);
+            Map(x => x.AuthenticationSource);
 
             this.MapFullAudited();
 

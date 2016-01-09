@@ -9,21 +9,23 @@ namespace Abp.Zero.NHibernate.EntityMappings
     /// </summary>
     /// <typeparam name="TTenant">Tenant type</typeparam>
     /// <typeparam name="TUser">User type</typeparam>
-    public abstract class TenantMap<TTenant, TUser> : EntityMap<TTenant>
+    public abstract class AbpTenantMap<TTenant, TUser> : EntityMap<TTenant>
         where TTenant : AbpTenant<TTenant, TUser>
         where TUser : AbpUser<TTenant, TUser>
     {
         /// <summary>
         /// Constructor.
         /// </summary>
-        protected TenantMap()
+        protected AbpTenantMap()
             : base("AbpTenants")
         {
+            References(x => x.Edition).Column("EditionId").Nullable();
+
             Map(x => x.TenancyName);
             Map(x => x.Name);
+            Map(x => x.IsActive);
 
-            this.MapDeletionAudited();
-            this.MapAudited();
+            this.MapFullAudited();
 
             Polymorphism.Explicit();
         }

@@ -3,14 +3,16 @@ using Abp.NHibernate.EntityMappings;
 
 namespace Abp.Zero.NHibernate.EntityMappings
 {
-    public abstract class PermissionSettingMap<TPermissionSetting> : EntityMap<TPermissionSetting, long>
-        where TPermissionSetting : PermissionSetting
+    public class PermissionSettingMap : EntityMap<PermissionSetting, long>
     {
-        protected PermissionSettingMap()
+        public PermissionSettingMap()
             : base("AbpPermissions")
         {
+            DiscriminateSubClassesOnColumn("Discriminator");
+
             Map(x => x.Name);
             Map(x => x.IsGranted);
+
             this.MapCreationAudited();
         }
     }
